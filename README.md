@@ -1,3 +1,12 @@
+# Screenshot for Crop-Stats
+
+![Alt text](./screenshots/crop_stats.png "Optional Title")
+
+# Screenshot for Yearly-Stats
+
+![Alt text](./screenshots/yearly_stats.png "Optional Title")
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

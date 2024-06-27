@@ -18,46 +18,50 @@ const AgricultureAnalytics: React.FC<AgricultureAnalyticsProps> = ({ jsonData })
   }, [jsonData]);
 
   return (
-    <div className="table-container">
-      <h2 className="center-text">Yearly Crop Production Stats</h2>
-      <Table>
-        <thead>
-          <tr className="table-header">
-            <th className="center-text">Year</th>
-            <th className="center-text">Crop with Maximum Production</th>
-            <th className="center-text">Crop with Minimum Production</th>
-          </tr>
-        </thead>
-        <tbody>
-          {yearlyStats.map(({ year, maxCrop, minCrop }) => (
-            <tr key={year}>
-              <td className="center-text">{year}</td>
-              <td className="center-text">{maxCrop}</td>
-              <td className="center-text">{minCrop}</td>
+    <div className="tables-wrapper">
+      <div className="table-wrapper">
+        <h2 className="center-text">Yearly Crop Production Stats</h2>
+        <Table className="center-text">
+          <thead>
+            <tr className="table-header">
+              <th>Year</th>
+              <th>Crop with Maximum Production</th>
+              <th>Crop with Minimum Production</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {yearlyStats.map(({ year, maxCrop, minCrop }) => (
+              <tr key={year}>
+                <td>{year}</td>
+                <td>{maxCrop}</td>
+                <td>{minCrop}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
 
-      <h2 className="center-text">Crop Average Stats (1950-2020)</h2>
-      <Table>
-        <thead>
-          <tr className="table-header">
-            <th className="center-text">Crop</th>
-            <th className="center-text">Average Yield</th>
-            <th className="center-text">Average Cultivation Area</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cropStats.map(({ crop, avgYield, avgArea }) => (
-            <tr key={crop}>
-              <td className="center-text">{crop}</td>
-              <td className="center-text">{avgYield}</td>
-              <td className="center-text">{avgArea}</td>
+      <div className="table-wrapper">
+        <h2 className="center-text">Crop Average Stats (1950-2020)</h2>
+        <Table className="center-text">
+          <thead>
+            <tr className="table-header">
+              <th>Crop</th>
+              <th>Average Yield</th>
+              <th>Average Cultivation Area</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {cropStats.map(({ crop, avgYield, avgArea }) => (
+              <tr key={crop}>
+                <td>{crop}</td>
+                <td>{avgYield}</td>
+                <td>{avgArea}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
 };
