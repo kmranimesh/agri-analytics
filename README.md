@@ -1,4 +1,8 @@
-# Screenshot for Crop-Stats
+# Agriculture Analytics
+
+This project analyzes Indian agriculture data and displays it using Mantine tables.# Screenshot for Crop-Stats
+
+#Live : https://agri-analytics.vercel.app/
 
 ![Alt text](./screenshots/crop_stats.png "Optional Title")
 
