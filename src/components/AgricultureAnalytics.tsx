@@ -1,20 +1,22 @@
+// src/components/AgricultureAnalytics.tsx
 import React, { useEffect, useState } from 'react';
 import { Table } from '@mantine/core';
 import { processData, getYearlyStats, getCropStats } from '../utils/dataProcessing';
+import { CropData } from '../types';
 
 interface AgricultureAnalyticsProps {
-  csvData: string;
+  jsonData: CropData[];
 }
 
-const AgricultureAnalytics: React.FC<AgricultureAnalyticsProps> = ({ csvData }) => {
-  const [yearlyStats, setYearlyStats] = useState<{ year: number; maxCrop: string; minCrop: string; }[]>([]);
+const AgricultureAnalytics: React.FC<AgricultureAnalyticsProps> = ({ jsonData }) => {
+  const [yearlyStats, setYearlyStats] = useState<{ year: string; maxCrop: string; minCrop: string; }[]>([]);
   const [cropStats, setCropStats] = useState<{ crop: string; avgYield: number; avgArea: number; }[]>([]);
 
   useEffect(() => {
-    const data = processData(csvData);
+    const data = processData(jsonData);
     setYearlyStats(getYearlyStats(data));
     setCropStats(getCropStats(data));
-  }, [csvData]);
+  }, [jsonData]);
 
   return (
     <div>

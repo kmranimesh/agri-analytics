@@ -1,9 +1,11 @@
+// src/App.tsx
 import React, { useState, useEffect } from 'react';
 import AgricultureAnalytics from './components/AgricultureAnalytics';
 import jsonData from './data/agriculture_data.json';
+import { CropData } from './types';
 
 const App: React.FC = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<CropData[]>([]);
 
   useEffect(() => {
     setData(jsonData);
