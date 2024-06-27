@@ -1,4 +1,3 @@
-// src/components/AgricultureAnalytics.tsx
 import React, { useEffect, useState } from 'react';
 import { Table } from '@mantine/core';
 import { processData, getYearlyStats, getCropStats } from '../utils/dataProcessing';

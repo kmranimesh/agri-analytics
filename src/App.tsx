@@ -1,4 +1,3 @@
-// src/App.tsx
 import React, { useState, useEffect } from 'react';
 import AgricultureAnalytics from './components/AgricultureAnalytics';
 import jsonData from './data/agriculture_data.json';

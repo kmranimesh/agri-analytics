@@ -1,31 +1,29 @@
-// src/utils/dataProcessing.ts
-import { CropData } from '../types';
+import { CropData, ProcessedCropData } from '../types';
 
-export const processData = (jsonData: CropData[]): CropData[] => {
-  return jsonData.map((row: any) => ({
-    Country: row.Country,
-    Year: row.Year,
-    "Crop Name": row["Crop Name"],
-    "Crop Production (UOM:t(Tonnes))": row["Crop Production (UOM:t(Tonnes))"] || 0,
-    "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": row["Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))"] || 0,
-    "Area Under Cultivation (UOM:Ha(Hectares))": row["Area Under Cultivation (UOM:Ha(Hectares))"] || 0,
+export const processData = (jsonData: CropData[]): ProcessedCropData[] => {
+  return jsonData.map((row: CropData) => ({
+    year: row.Year.replace("Financial Year (Apr - Mar), ", ""),
+    crop: row["Crop Name"],
+    production: row["Crop Production (UOM:t(Tonnes))"] ? Number(row["Crop Production (UOM:t(Tonnes))"]) : 0,
+    yield: row["Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))"] ? Number(row["Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))"]) : 0,
+    area: row["Area Under Cultivation (UOM:Ha(Hectares))"] ? Number(row["Area Under Cultivation (UOM:Ha(Hectares))"]) : 0,
   }));
 };
 
-export const getYearlyStats = (data: CropData[]): { year: string; maxCrop: string; minCrop: string; }[] => {
+export const getYearlyStats = (data: ProcessedCropData[]): { year: string; maxCrop: string; minCrop: string; }[] => {
   const yearlyStats: { [key: string]: { maxCrop: string; minCrop: string; maxProd: number; minProd: number; } } = {};
 
-  data.forEach(({ Year, "Crop Name": crop, "Crop Production (UOM:t(Tonnes))": production }) => {
-    if (!yearlyStats[Year]) {
-      yearlyStats[Year] = { maxCrop: crop, minCrop: crop, maxProd: production, minProd: production };
+  data.forEach(({ year, crop, production }) => {
+    if (!yearlyStats[year]) {
+      yearlyStats[year] = { maxCrop: crop, minCrop: crop, maxProd: production, minProd: production };
     } else {
-      if (production > yearlyStats[Year].maxProd) {
-        yearlyStats[Year].maxCrop = crop;
-        yearlyStats[Year].maxProd = production;
+      if (production > yearlyStats[year].maxProd) {
+        yearlyStats[year].maxCrop = crop;
+        yearlyStats[year].maxProd = production;
       }
-      if (production < yearlyStats[Year].minProd) {
-        yearlyStats[Year].minCrop = crop;
-        yearlyStats[Year].minProd = production;
+      if (production < yearlyStats[year].minProd) {
+        yearlyStats[year].minCrop = crop;
+        yearlyStats[year].minProd = production;
       }
     }
   });
@@ -37,10 +35,10 @@ export const getYearlyStats = (data: CropData[]): { year: string; maxCrop: strin
   }));
 };
 
-export const getCropStats = (data: CropData[]): { crop: string; avgYield: number; avgArea: number; }[] => {
+export const getCropStats = (data: ProcessedCropData[]): { crop: string; avgYield: number; avgArea: number; }[] => {
   const cropStats: { [key: string]: { totalYield: number; totalArea: number; count: number; } } = {};
 
-  data.forEach(({ "Crop Name": crop, "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": cropYield, "Area Under Cultivation (UOM:Ha(Hectares))": area }) => {
+  data.forEach(({ crop, yield: cropYield, area }) => {
     if (!cropStats[crop]) {
       cropStats[crop] = { totalYield: cropYield, totalArea: area, count: 1 };
     } else {
