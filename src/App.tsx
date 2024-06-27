@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import AgricultureAnalytics from './components/AgricultureAnalytics';
+import jsonData from './data/agriculture_data.json';
 
 const App: React.FC = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData(jsonData);
+  }, []);
+
   return (
     <div>
-      <h1>Agriculture Analytics</h1>
+      {data.length > 0 ? <AgricultureAnalytics jsonData={data} /> : <p>Loading...</p>}
     </div>
   );
 };
